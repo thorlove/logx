@@ -1,4 +1,4 @@
-module github.com/thorlove/logx.git
+module github.com/thorlove/logx
 
 go 1.22
 
