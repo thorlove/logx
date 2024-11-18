@@ -100,10 +100,10 @@ func withDefaults(opt []Option) []Option {
 	encoderConfig := zapcore.EncoderConfig{
 		TimeKey:       "time",
 		LevelKey:      "level",
-		NameKey:       "logger", // used by logger.Named(key); optional; useless
+		NameKey:       "app",
 		CallerKey:     "caller",
 		MessageKey:    "msg",
-		StacktraceKey: "stacktrace", // use by zap.AddStacktrace; optional; useless
+		StacktraceKey: "stacktrace",
 		LineEnding:    zapcore.DefaultLineEnding,
 		EncodeLevel:   zapcore.LowercaseLevelEncoder, // 小写编码器
 		EncodeTime: func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
