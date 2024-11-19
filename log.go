@@ -11,7 +11,7 @@ import (
 const (
 	DefaultConsoleSeparator = " | "
 	DefaultTimeLayout       = time.RFC3339
-	DefaultMaxSize          = 10
+	DefaultMaxSize          = 25
 	DefaultMaxAge           = 7
 	DefaultMaxBackups       = 3
 	DefaultCompress         = true
@@ -57,31 +57,7 @@ func (f F) Loggable() map[string]string {
 	return f
 }
 
-func (l Logger) Fatalw(msg string, kvs ...interface{}) { l.sugar.Fatalw(msg, kvs...) }
-func (l Logger) Fatalf(fmt string, kvs ...interface{}) { l.sugar.Fatalf(fmt, kvs...) }
-func (l Logger) Fatalln(v ...interface{})              { l.sugar.Fatalln(v...) }
-
-func (l Logger) DPanicw(msg string, kvs ...interface{}) { l.sugar.DPanicw(msg, kvs...) }
-func (l Logger) DPanicf(fmt string, v ...interface{})   { l.sugar.DPanicf(fmt, v...) }
-func (l Logger) DPanicln(v ...interface{})              { l.sugar.DPanicln(v...) }
-
-func (l Logger) Debugw(msg string, kvs ...interface{}) { l.sugar.Debugw(msg, kvs...) }
-func (l Logger) Debugf(fmt string, v ...interface{})   { l.sugar.Debugf(fmt, v...) }
-func (l Logger) Debugln(v ...interface{})              { l.sugar.Debugln(v...) }
-
-func (l Logger) Infow(msg string, kvs ...interface{}) { l.sugar.Infow(msg, kvs...) }
-func (l Logger) Infof(fmt string, v ...interface{})   { l.sugar.Infof(fmt, v...) }
-func (l Logger) Infoln(v ...interface{})              { l.sugar.Infoln(v...) }
-
-func (l Logger) Warnw(msg string, kvs ...interface{}) { l.sugar.Warnw(msg, kvs...) }
-func (l Logger) Warnf(fmt string, v ...interface{})   { l.sugar.Warnf(fmt, v...) }
-func (l Logger) Warnln(v ...interface{})              { l.sugar.Warnln(v...) }
-
-func (l Logger) Errorw(msg string, kvs ...interface{}) { l.sugar.Errorw(msg, kvs...) }
-func (l Logger) Errorf(fmt string, v ...interface{})   { l.sugar.Errorf(fmt, v...) }
-func (l Logger) Errorln(v ...interface{})              { l.sugar.Errorln(v...) }
-
-func New(opts ...Option) *Logger {
+func New(opts ...Option) *zap.SugaredLogger {
 	l := &Logger{}
 	for _, f := range withDefaults(opts) {
 		f(l)
@@ -120,8 +96,7 @@ func New(opts ...Option) *Logger {
 	if len(l.hooks) > 0 {
 		l.logger = l.logger.WithOptions(zap.Hooks(l.hooks...))
 	}
-	l.sugar = l.logger.Sugar()
-	return l
+	return l.logger.Sugar()
 }
 
 func (l *Logger) Named(name string) *Logger {

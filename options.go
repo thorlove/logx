@@ -142,9 +142,9 @@ func withDefaults(opt []Option) []Option {
 	return append([]Option{
 		WithLevel(DefaultLevel),
 		WithTimeLayout(DefaultTimeLayout),
-		WithSampleEncoder(JSON),
 		WithDisableConsole(DefaultDisableConsole),
-		WithRotationFileWriter(DefaultFile, DefaultMaxSize, DefaultMaxAge, DefaultMaxBackups, DefaultCompress),
 		WithConsoleSeparator(DefaultConsoleSeparator),
+		WithSampleEncoder(JSON),
+		WithRotationFileWriter(DefaultFile, DefaultMaxSize, DefaultMaxAge, DefaultMaxBackups, DefaultCompress),
 	}, opt...)
 }
