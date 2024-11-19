@@ -7,16 +7,37 @@ import (
 	"testing"
 )
 
-func TestLogger(t *testing.T) {
+func TestHooks(t *testing.T) {
 	count := &atomic.Int64{}
 	log := New(
-		WithLevel(zapcore.InfoLevel),
-		WithField(F{"name": "robin"}),
 		WithHooks(func(e zapcore.Entry) error {
 			fmt.Println("count:", count.Add(1), "msg:", e.Message)
 			return nil
-		})).Named("LOGX")
-	log.Errorw("error msg", "key1", "value", "key2", "value2")
+		}))
 	log.Infoln("info msg")
-	log.Debugln("debug msg")
+}
+
+func TestNamed(t *testing.T) {
+	log := New()
+	log.Named("LOGX").Infoln("info msg")
+}
+func TestField(t *testing.T) {
+	log := New(
+		WithLevel(zapcore.InfoLevel),
+		WithField(F{"name": "robin"}),
+	)
+	log.Errorw("error msg", "key1", "value", "key2", "value2")
+}
+
+func TestEncoder(t *testing.T) {
+	log := New(
+		WithLevel(zapcore.InfoLevel),
+		WithConsoleSeparator("\t"),
+		WithSampleEncoder(Console),
+	)
+	log.Infoln("info msg")
+	log = New(
+		WithSampleEncoder(JSON),
+	)
+	log.Errorw("error msg", "key1", "value", "key2", "value2")
 }

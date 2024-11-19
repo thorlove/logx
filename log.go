@@ -20,7 +20,12 @@ const (
 	DefaultLevel            = zapcore.InfoLevel
 )
 
-type Level int8
+const (
+	JSON    EncoderType = "json"
+	Console EncoderType = "console"
+)
+
+type EncoderType string
 
 type Logger struct {
 	logger         *zap.Logger
