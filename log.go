@@ -17,15 +17,25 @@ const (
 	DefaultCompress         = true
 	DefaultFile             = "logs/log.log"
 	DefaultDisableConsole   = false
-	DefaultLevel            = zapcore.InfoLevel
+	DefaultLevel            = InfoLevel
 )
 
 const (
 	JSON    EncoderType = "json"
 	Console EncoderType = "console"
 )
+const (
+	DebugLevel Level = iota - 1
+	InfoLevel
+	WarnLevel
+	ErrorLevel
+	DPanicLevel
+	PanicLevel
+	FatalLevel
+)
 
 type EncoderType string
+type Level int8
 
 type Logger struct {
 	logger         *zap.Logger

@@ -12,9 +12,26 @@ import (
 type Option func(log *Logger)
 
 // WithLevel 设置日志级别。
-func WithLevel(lvl zapcore.Level) Option {
+func WithLevel(lvl Level) Option {
 	return func(log *Logger) {
-		log.level = lvl
+		switch lvl {
+		case ErrorLevel:
+			log.level = zapcore.ErrorLevel
+		case InfoLevel:
+			log.level = zapcore.InfoLevel
+		case PanicLevel:
+			log.level = zapcore.PanicLevel
+		case FatalLevel:
+			log.level = zapcore.FatalLevel
+		case WarnLevel:
+			log.level = zapcore.WarnLevel
+		case DPanicLevel:
+			log.level = zapcore.DPanicLevel
+		case DebugLevel:
+			log.level = zapcore.DebugLevel
+		default:
+			log.level = zapcore.InfoLevel
+		}
 	}
 }
 

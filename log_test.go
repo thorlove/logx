@@ -23,15 +23,15 @@ func TestNamed(t *testing.T) {
 }
 func TestField(t *testing.T) {
 	log := New(
-		WithLevel(zapcore.InfoLevel),
+		WithLevel(DebugLevel),
 		WithField(F{"name": "robin"}),
 	)
-	log.Errorw("error msg", "key1", "value", "key2", "value2")
+	log.Debugw("error msg", "key1", "value", "key2", "value2")
 }
 
 func TestEncoder(t *testing.T) {
 	log := New(
-		WithLevel(zapcore.InfoLevel),
+		WithLevel(InfoLevel),
 		WithConsoleSeparator("\t"),
 		WithSampleEncoder(Console),
 	)
