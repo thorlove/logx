@@ -146,6 +146,11 @@ func WithSampleEncoder(t EncoderType) Option {
 		if log.sep != "" {
 			encoderConfig.ConsoleSeparator = log.sep
 		}
+		if log.timeLayout != "" {
+			encoderConfig.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+				enc.AppendString(t.Format(log.timeLayout))
+			}
+		}
 		if t == JSON {
 			log.encoder = zapcore.NewJSONEncoder(encoderConfig)
 		} else if t == Console {
